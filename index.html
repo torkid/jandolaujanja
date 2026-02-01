@@ -41,6 +41,21 @@
             color: var(--chalk-white);
             line-height: 1.7;
             font-size: 17px;
+            position: relative;
+        }
+
+        /* Noise Texture Overlay - Matte Finish */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
         .container {
@@ -56,6 +71,47 @@
 
         .section-alt {
             background: var(--bg-blackboard-light);
+            position: relative;
+        }
+
+        /* Slanted Geometric Dividers */
+        .section-alt::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: var(--bg-blackboard-light);
+            clip-path: polygon(0 100%, 100% 0, 100% 100%);
+        }
+
+        .section-alt::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: var(--bg-blackboard-light);
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+        }
+
+        /* Scroll Reveal Animation */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeUp 0.6s ease-out;
         }
 
         /* Typography */
@@ -68,7 +124,7 @@
         }
 
         h1 {
-            font-size: 26px;
+            font-size: 32px;
         }
 
         h2 {
@@ -83,6 +139,7 @@
             color: var(--chalk-dim);
             font-size: 16px;
             margin-bottom: 16px;
+            line-height: 1.8;
         }
 
         strong {
@@ -116,13 +173,13 @@
         .hero-eyebrow {
             display: inline-block;
             font-size: 12px;
-            font-weight: 600;
-            color: var(--chalk-red);
+            font-weight: 700;
+            color: #ffffff;
+            background: var(--chalk-red);
             margin-bottom: 16px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border: 1px solid var(--chalk-red);
-            padding: 8px 12px;
+            padding: 10px 16px;
         }
 
         .hero p {
@@ -133,20 +190,36 @@
         .btn-cta {
             display: block;
             width: 100%;
-            background: var(--chalk-yellow);
-            color: var(--bg-blackboard);
+            background: #FFD700;
+            color: #000000;
             font-size: 15px;
-            font-weight: 700;
+            font-weight: 900;
             padding: 16px 20px;
             border: none;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 0.3px;
             margin-top: 20px;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+            }
+
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.2);
+            }
         }
 
         .btn-cta:active {
-            background: #e5c44e;
+            background: #e5c200;
+            animation: none;
         }
 
         /* Content Lists */
@@ -198,12 +271,30 @@
         .product-image {
             text-align: center;
             margin-top: 20px;
+            position: relative;
+        }
+
+        /* Radial Glow Spotlight Effect */
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0) 70%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .product-image img {
-            max-width: 200px;
+            max-width: 100%;
             width: 100%;
             border: 3px solid var(--charcoal);
+            filter: brightness(1.15) contrast(1.1);
+            position: relative;
+            z-index: 1;
         }
 
         .feature-list {
@@ -437,15 +528,24 @@
 
         .modal-close {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 28px;
-            height: 28px;
-            background: transparent;
-            border: 1px solid var(--charcoal);
-            color: var(--chalk-dim);
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            background: var(--charcoal);
+            border: none;
+            border-radius: 50%;
+            color: var(--chalk-white);
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--chalk-red);
         }
 
         .modal-header {
@@ -454,15 +554,25 @@
         }
 
         .modal-header h3 {
-            font-size: 20px;
-            margin-bottom: 4px;
+            font-size: 18px;
+            margin-bottom: 8px;
             color: var(--chalk-yellow);
+            text-transform: uppercase;
         }
 
         .modal-header p {
             font-size: 14px;
             color: var(--chalk-dim);
             margin: 0;
+            line-height: 1.5;
+        }
+
+        .input-label {
+            font-size: 12px;
+            color: var(--chalk-dim);
+            text-align: left;
+            display: block;
+            margin-bottom: 6px;
         }
 
         .form-input {
@@ -488,14 +598,15 @@
 
         .btn-submit {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             font-size: 15px;
-            font-weight: 700;
+            font-weight: 900;
             background: var(--chalk-yellow);
-            color: var(--bg-blackboard);
+            color: #000000;
             border: none;
             cursor: pointer;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-submit:disabled {
@@ -510,6 +621,13 @@
         .payment-secure img {
             max-width: 100%;
             height: auto;
+        }
+
+        .trust-text {
+            font-size: 11px;
+            color: var(--chalk-dim);
+            margin-top: 10px;
+            opacity: 0.8;
         }
 
         .loader {
@@ -581,11 +699,11 @@
         <section class="hero">
             <div class="container">
                 <span class="hero-eyebrow">Kwa Mfanyabiashara Uliyechoka Kuitwa "Machinga" Na Wateja Wako...</span>
-                <h1>JINSI YA KUTOKA KWENYE "UTUMWA WA KUBISHANA BEI" KWENDA KWENYE "MAMLAKA YA KUTAJA BEI UNAYOTAKA"
-                </h1>
-                <p>KWA KUTUMIA SAYANSI YA KUGEUZA KERO KUWA PESA — GEUZA BIASHARA YAKO YA KAWAIDA KUWA "SUMAKU YA PESA"
-                    NDANI YA SIKU 30 HATA KAMA UNAHISI "SOKO LA TANZANIA HALIELEWI THAMANI" AU HUNA OFISI NZURI YA
-                    KUWAKALISHA WATEJA NA UZURI ZAIDI UNATUMIA MTAJI HUU HUU ULIONAO SASA.</p>
+                <h1>JINSI YA KUTOKA KUWA MFANYABIASHARA ANAYEFUKUZA WATU, KWENDA KUWA KIMBILIO LA WATEJA WENYE PESA
+                    NDANI
+                    YA <span class="chalk-yellow">SIKU 14 TUU!</span>...</h1>
+                <p>Bila Kulazimika Kubembeleza Watu Inbox, Kutumia Gharama kubwa ya Matangazo Online, Bila Kuonekana
+                    Kero Kwenye Magroup ya WhatsApp, na Kubwa Kuliko Yote Unatumia Bidhaa Hizo Hizo Ulizonazo Leo.</p>
             </div>
         </section>
 
@@ -727,6 +845,9 @@
             <div class="container">
                 <div class="product-content">
                     <h2>HII HAPA SILAHA ULIYOKUWA UKIISUBIRI: "PAMBANA, PASUA, PATA"</h2>
+                    <div class="product-image">
+                        <img src="product.png" alt="Pambana Pasua Pata">
+                    </div>
                     <p class="product-subtitle">Manual ya Vita kwa Mfanyabiashara</p>
                     <p class="text-left">Sikiliza kwa makini: Hiki siyo "Kitabu cha Kusoma na Kuweka Kabatini." Hii ni
                         <strong>Manual ya Vita.</strong> Ni mwongozo wa hatua kwa hatua wa kufanya "Upasuaji" wa
@@ -755,9 +876,6 @@
                                 Kishamba:</strong> Kwa nini kuuza "Sifa za Bidhaa" (Features) kunakuua, na jinsi ya
                             kutumia "Emotional Triggers" kumfanya mteja akupe pesa haraka.</span></li>
                 </ul>
-                <div class="product-image">
-                    <img src="https://i.ibb.co/0RbSYSrT/Pambana-Pasua-Pata-Ebook-Cover.png" alt="Pambana Pasua Pata">
-                </div>
             </div>
         </section>
 
@@ -944,19 +1062,22 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-header">
-                <h3>Lipa Tsh 5,000</h3>
-                <p>Ingiza namba yako ya simu</p>
+                <h3>HII NI BEI YA BANDO LA WIKI TU</h3>
+                <p>Usiruhusu Tsh 5,000/- ikutenge na maarifa ya kubadili maisha yako. Hii ni pesa ndogo kuliko
+                    unayotumia kumnunulia bia mshkaji asiye na msaada.</p>
             </div>
             <form id="paymentForm" onsubmit="handlePayment(event)">
+                <label class="input-label">Weka Namba ya Mpesa/Tigo/Airtel</label>
                 <input type="tel" id="phoneNumber" class="form-input" placeholder="0754000000" required>
                 <div id="loadingIndicator" class="loader">
                     <div class="spinner"></div>
                     <p style="color: var(--chalk-white); margin:0;">Angalia simu yako...</p>
                 </div>
-                <button type="submit" id="payBtn" class="btn-submit">LIPA SASA</button>
+                <button type="submit" id="payBtn" class="btn-submit">NIPE KITABU CHANGU SASA</button>
             </form>
             <div class="payment-secure">
                 <img src="secure.png" alt="M-Pesa, Tigo Pesa, Airtel Money, Halopesa">
+                <p class="trust-text">🔒 Malipo yako ni salama. Hakuna makato ya ziada.</p>
             </div>
         </div>
     </div>
