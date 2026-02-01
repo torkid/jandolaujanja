@@ -1,721 +1,1085 @@
 <!DOCTYPE html>
-<html lang="sw" class="scroll-smooth">
+<html lang="sw">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jando la Ujanja | Pambana, Pasua, Pata</title>
-    <meta name="description" content="Jinsi ya kutoka kwenye utumwa wa kubishana bei kwenda kwenye mamlaka ya kutaja bei unayotaka.">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
+    <meta name="description"
+        content="Jinsi ya kutoka kwenye utumwa wa kubishana bei kwenda kwenye mamlaka ya kutaja bei unayotaka.">
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Permanent+Marker&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-
-    <!-- FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
-        /* --- VISUAL PHILOSOPHY: THE MASTERMIND'S BLACKBOARD --- */
-        
         :root {
-            --chalk-white: #e3e3e3;
-            --chalk-faded: #ffffff80;
-            --chalk-red: #ff4d4d;
-            --chalk-yellow: #facc15;
-            --board-bg: #1a1c20;
+            --bg-blackboard: #1a1a1a;
+            --bg-blackboard-light: #222222;
+            --chalk-white: #e8e4dc;
+            --chalk-dim: #9a9590;
+            --chalk-yellow: #f4d35e;
+            --chalk-red: #e63946;
+            --chalk-green: #4ade80;
+            --charcoal: #3d3d3d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--board-bg);
-            color: var(--chalk-white);
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            line-height: 1.6;
+            background: var(--bg-blackboard);
+            color: var(--chalk-white);
+            line-height: 1.7;
+            font-size: 17px;
         }
 
-        /* Blackboard Texture */
-        .blackboard-texture {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            background-image: 
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"),
-                radial-gradient(circle at center, #2d3036 0%, #1a1c20 100%);
-            background-blend-mode: overlay;
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .chalk-dust {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 70%);
-            pointer-events: none;
-            z-index: -1;
+        .section {
+            padding: 32px 0;
+            text-align: center;
+        }
+
+        .section-alt {
+            background: var(--bg-blackboard-light);
         }
 
         /* Typography */
-        .font-chalk-heading { font-family: 'Permanent Marker', cursive; letter-spacing: 1px; }
-        .font-chalk-hand { font-family: 'Architects Daughter', cursive; }
-        .font-science { font-family: 'Roboto Mono', monospace; }
-
-        /* Components */
-        .chalk-border {
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        h1,
+        h2,
+        h3 {
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 16px;
         }
 
-        .chalk-underline {
-            text-decoration: underline;
-            text-decoration-color: var(--chalk-red);
-            text-decoration-style: solid;
-            text-decoration-thickness: 3px;
+        h1 {
+            font-size: 26px;
         }
 
-        .chalk-highlight { color: var(--chalk-yellow); }
-
-        .chalk-box {
-            border: 2px solid var(--chalk-white);
-            padding: 20px;
-            position: relative;
-            background: rgba(255,255,255,0.02);
-            margin-bottom: 2rem;
-        }
-        
-        .chalk-box::before {
-             /* content: ''; */ /* Optional corner accent */
+        h2 {
+            font-size: 22px;
         }
 
-        /* Button Styling */
-        .btn-action {
-            background-color: var(--chalk-red);
-            color: white;
-            font-family: 'Permanent Marker', cursive;
+        h3 {
+            font-size: 20px;
+        }
+
+        p {
+            color: var(--chalk-dim);
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        strong {
+            color: var(--chalk-white);
+        }
+
+        .chalk-red {
+            color: var(--chalk-red);
+        }
+
+        .chalk-yellow {
+            color: var(--chalk-yellow);
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--charcoal);
+            margin: 24px 0;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 40px 20px 32px;
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--chalk-red);
+            margin-bottom: 16px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 4px 4px 0px rgba(255,255,255,0.2);
-            clip-path: polygon(2% 0, 100% 0, 98% 100%, 0% 100%);
+            letter-spacing: 0.5px;
+            border: 1px solid var(--chalk-red);
+            padding: 8px 12px;
+        }
+
+        .hero p {
+            font-size: 15px;
+        }
+
+        /* CTA Button */
+        .btn-cta {
+            display: block;
+            width: 100%;
+            background: var(--chalk-yellow);
+            color: var(--bg-blackboard);
+            font-size: 15px;
+            font-weight: 700;
+            padding: 16px 20px;
             border: none;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-top: 20px;
         }
 
-        .btn-action:hover {
-            transform: scale(1.02) rotate(-1deg);
-            box-shadow: 6px 6px 0px rgba(255,255,255,0.3);
-            background-color: #d90404;
+        .btn-cta:active {
+            background: #e5c44e;
         }
 
-        /* Modal Styles */
+        /* Content Lists */
+        .content-list {
+            list-style: none;
+            text-align: left;
+            margin: 16px 0;
+        }
+
+        .content-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--charcoal);
+            display: flex;
+            gap: 10px;
+            font-size: 15px;
+            color: var(--chalk-dim);
+        }
+
+        .content-list li:last-child {
+            border-bottom: none;
+        }
+
+        .icon-box {
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+
+        .icon-x {
+            color: var(--chalk-red);
+        }
+
+        .icon-check {
+            color: var(--chalk-green);
+        }
+
+        /* Product Section */
+        .product-content {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product-subtitle {
+            color: var(--chalk-yellow);
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        .product-image {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .product-image img {
+            max-width: 200px;
+            width: 100%;
+            border: 3px solid var(--charcoal);
+        }
+
+        .feature-list {
+            list-style: none;
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--charcoal);
+            display: flex;
+            gap: 10px;
+            font-size: 15px;
+            color: var(--chalk-dim);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Bonus Cards */
+        .bonus-card {
+            background: var(--bg-blackboard-light);
+            border: 2px solid var(--charcoal);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .bonus-card img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+
+        .bonus-card-content {
+            padding: 16px;
+            text-align: center;
+        }
+
+        .bonus-badge {
+            display: inline-block;
+            background: var(--chalk-red);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .bonus-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .bonus-value {
+            font-size: 13px;
+            color: var(--chalk-yellow);
+            margin-bottom: 8px;
+        }
+
+        .bonus-card p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* Pricing */
+        .price-box {
+            background: var(--bg-blackboard-light);
+            border: 2px solid var(--charcoal);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--charcoal);
+            font-size: 14px;
+        }
+
+        .price-row:last-child {
+            border-bottom: none;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--chalk-dim);
+        }
+
+        .price-total {
+            border-top: 2px solid var(--chalk-white);
+            padding-top: 10px;
+            margin-top: 8px;
+            font-weight: 700;
+        }
+
+        .final-price {
+            margin: 28px 0;
+        }
+
+        .final-price-label {
+            font-size: 15px;
+            color: var(--chalk-dim);
+            margin-bottom: 4px;
+        }
+
+        .final-price-amount {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--chalk-yellow);
+        }
+
+        .final-price-note {
+            font-size: 14px;
+            color: var(--chalk-dim);
+        }
+
+        /* Guarantee */
+        .guarantee {
+            text-align: center;
+            padding: 28px 20px;
+            border: 2px dashed var(--chalk-green);
+            margin: 0 20px;
+        }
+
+        .guarantee-icon {
+            font-size: 40px;
+            color: var(--chalk-green);
+            margin-bottom: 12px;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px dashed var(--charcoal);
+            padding: 16px 0;
+            text-align: left;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--chalk-yellow);
+        }
+
+        .faq-item p {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            text-align: center;
+            border-top: 2px solid var(--charcoal);
+        }
+
+        .cta-option {
+            padding: 16px;
+            border: 2px solid var(--charcoal);
+            text-align: left;
+            margin-bottom: 12px;
+        }
+
+        .cta-option.dim {
+            opacity: 0.5;
+        }
+
+        .cta-option.bright {
+            border-color: var(--chalk-green);
+            background: rgba(74, 222, 128, 0.05);
+        }
+
+        .cta-option h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .cta-option.dim h4 {
+            color: var(--chalk-red);
+        }
+
+        .cta-option.bright h4 {
+            color: var(--chalk-green);
+        }
+
+        .cta-option p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .footer-copy {
+            margin-top: 32px;
+            font-size: 11px;
+            color: var(--chalk-dim);
+            opacity: 0.5;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            backdrop-filter: blur(5px);
-            overflow-y: auto;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
         }
 
         .modal-content {
-            background-color: #222;
-            border: 2px solid var(--chalk-white);
-            margin: 5vh auto;
-            padding: 20px;
-            width: 90%;
-            max-width: 450px;
-            position: relative;
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
-        }
-
-        #thank-you-page { display: none; }
-
-        /* Loader */
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--chalk-red);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .scannable-list li {
-            margin-bottom: 1.2rem;
-            padding-left: 2rem;
+            background: var(--bg-blackboard-light);
+            border: 2px solid var(--charcoal);
+            padding: 28px 20px;
+            width: 100%;
+            max-width: 340px;
             position: relative;
         }
-        .scannable-list.cross li::before {
-            content: '❌';
+
+        .modal-close {
             position: absolute;
-            left: 0;
-            color: var(--chalk-red);
-            font-weight: bold;
+            top: 10px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            background: transparent;
+            border: 1px solid var(--charcoal);
+            color: var(--chalk-dim);
+            cursor: pointer;
+            font-size: 18px;
         }
-        .scannable-list.check li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+            margin-bottom: 4px;
             color: var(--chalk-yellow);
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-        
-        .scannable-list.arrow li::before {
-            content: '👉';
-            position: absolute;
-            left: 0;
         }
 
-        /* Image Helpers */
-        .img-chalk-frame {
-            border: 4px solid white;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
-            transform: rotate(-2deg);
-            transition: transform 0.3s;
+        .modal-header p {
+            font-size: 14px;
+            color: var(--chalk-dim);
+            margin: 0;
         }
-        .img-chalk-frame:hover {
-            transform: rotate(0deg) scale(1.02);
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            font-family: inherit;
+            background: var(--bg-blackboard);
+            border: 2px solid var(--charcoal);
+            color: var(--chalk-white);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .form-input:focus {
+            border-color: var(--chalk-yellow);
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: var(--chalk-dim);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            background: var(--chalk-yellow);
+            color: var(--bg-blackboard);
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-submit:disabled {
+            background: var(--charcoal);
+        }
+
+        .payment-secure {
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .payment-secure img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 16px 0;
+        }
+
+        .loader.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--charcoal);
+            border-top-color: var(--chalk-yellow);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Thank You */
+        #thank-you-page {
+            display: none;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--bg-blackboard);
+        }
+
+        #thank-you-page.active {
+            display: flex;
+        }
+
+        .success-icon {
+            font-size: 56px;
+            color: var(--chalk-green);
+            margin-bottom: 16px;
+        }
+
+        .thank-you-box {
+            background: var(--bg-blackboard-light);
+            border: 2px solid var(--charcoal);
+            padding: 16px;
+            margin: 16px 0;
+            text-align: left;
+        }
+
+        .link-back {
+            color: var(--chalk-yellow);
+            text-decoration: none;
+            font-weight: 600;
         }
     </style>
 </head>
-<body class="antialiased">
 
-    <!-- Texture Layers -->
-    <div class="blackboard-texture"></div>
-    <div class="chalk-dust"></div>
-
-    <!-- MAIN SALES PAGE CONTENT -->
+<body>
     <div id="sales-page">
-
-        <!-- Header -->
-        <header class="py-4 border-b border-gray-700 bg-black/80 sticky top-0 z-40 backdrop-blur-sm">
-            <div class="container mx-auto px-4 flex justify-between items-center">
-                <div class="font-chalk-heading text-lg md:text-2xl text-white tracking-widest">
-                    JANDO LA UJANJA
-                </div>
-                <button onclick="openModal()" class="font-chalk-hand text-sm md:text-base text-yellow-400 border border-yellow-400 px-3 py-1 hover:bg-yellow-400 hover:text-black transition rounded-sm">
-                    Pata Nakala
-                </button>
-            </div>
-        </header>
-
-        <!-- HERO SECTION -->
-        <section class="py-12 container mx-auto px-4 relative">
-            
-            <div class="text-center max-w-5xl mx-auto">
-                <p class="font-science text-red-500 font-bold uppercase tracking-widest text-xs md:text-sm mb-4">
-                    KWA MFANYABIASHARA ULIYECHOKA KUITWA "MACHINGA" NA WATEJA WAKO...
-                </p>
-                
-                <h1 class="font-chalk-heading text-2xl md:text-4xl lg:text-5xl leading-tight mb-8">
-                    JINSI YA KUTOKA KWENYE "UTUMWA WA KUBISHANA BEI" KWENDA KWENYE "MAMLAKA YA KUTAJA BEI UNAYOTAKA" KWA KUTUMIA SAYANSI YA KUGEUZA KERO KUWA PESA
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container">
+                <span class="hero-eyebrow">Kwa Mfanyabiashara Uliyechoka Kuitwa "Machinga" Na Wateja Wako...</span>
+                <h1>JINSI YA KUTOKA KWENYE "UTUMWA WA KUBISHANA BEI" KWENDA KWENYE "MAMLAKA YA KUTAJA BEI UNAYOTAKA"
                 </h1>
-                
-                <p class="font-science text-gray-300 text-sm md:text-base mb-8 border-l-4 border-yellow-400 pl-4 text-left md:text-center md:border-none">
-                    GEUZA BIASHARA YAKO YA KAWAIDA KUWA "SUMAKU YA PESA" NDANI YA SIKU 30 HATA KAMA UNAHISI "SOKO LA TANZANIA HALIELEWI THAMANI" AU HUNA OFISI NZURI YA KUWAKALISHA WATEJA NA UZURI ZAIDI UNATUMIA MTAJI HUU HUU ULIONAO SASA.
-                </p>
-            </div>
-
-            <!-- Sub-headline & Image Split -->
-            <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto mt-8">
-                <!-- Text Column -->
-                <div class="bg-white/5 p-6 border border-gray-700 backdrop-blur-sm">
-                    <h2 class="font-chalk-hand text-xl md:text-2xl mb-4 text-yellow-400">
-                        Gundua siri ya kuacha kuuza "Bidhaa" zinazofanana na za jirani yako...
-                    </h2>
-                    <p class="text-gray-300 leading-relaxed font-science text-sm md:text-base mb-4">
-                        Na kuanza kuuza "Majibu ya Shida zao" ambayo wateja wataligombania kwa heshima, hata kama huna ofisi ya kifahari.
-                    </p>
-                    <p class="text-gray-400 text-sm font-science mb-6">
-                        Umeambiwa mara nyingi kwamba "Ukijituma na kupiga kazi sana utafanikiwa"... lakini huo si ukweli. Kama bidii ingekuwa ndio ufunguo, basi wabeba mizigo wangekuwa mabilionea wa Kariakoo.
-                    </p>
-                    <div class="mt-6">
-                        <button onclick="openModal()" class="btn-action w-full md:w-auto px-6 py-3 text-lg md:text-xl animate-pulse">
-                            Nataka Siri Hii - TSH 5,000 TU
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Main Offer Image -->
-                <div class="flex justify-center relative">
-                    <div class="absolute inset-0 bg-red-600 blur-3xl opacity-20 rounded-full"></div>
-                    <img src="https://i.ibb.co/pcMKc5Y/Whisk-0gtomftomn2nhntnte2m1iwljhtm00sohfmytez.jpg" 
-                         alt="Main Offer Visual" 
-                         class="img-chalk-frame relative z-10 w-full max-w-sm rounded-sm">
-                </div>
+                <p>KWA KUTUMIA SAYANSI YA KUGEUZA KERO KUWA PESA — GEUZA BIASHARA YAKO YA KAWAIDA KUWA "SUMAKU YA PESA"
+                    NDANI YA SIKU 30 HATA KAMA UNAHISI "SOKO LA TANZANIA HALIELEWI THAMANI" AU HUNA OFISI NZURI YA
+                    KUWAKALISHA WATEJA NA UZURI ZAIDI UNATUMIA MTAJI HUU HUU ULIONAO SASA.</p>
             </div>
         </section>
 
-        <!-- PROBLEM AWARENESS (JE, HII HALI INAKUHUSU?) -->
-        <section class="py-16 border-t border-gray-800 relative bg-black/20">
-            <div class="container mx-auto px-4 max-w-4xl">
-                <h3 class="font-chalk-heading text-2xl md:text-3xl mb-8 text-center text-red-500">
-                    JE, HII HALI INAKUHUSU?
-                </h3>
+        <!-- Sub-headline -->
+        <section class="section section-alt">
+            <div class="container text-left">
+                <p>Gundua siri ya kuacha kuuza "Bidhaa" zinazofanana na za jirani yako na kuanza kuuza "Majibu ya Shida
+                    zao" ambayo wateja wataligombania kwa heshima, hata kama huna ofisi ya kifahari.</p>
+                <hr>
+                <p><strong>Umeambiwa mara nyingi kwamba "Ukijituma na kupiga kazi sana utafanikiwa"... lakini huo si
+                        ukweli.</strong></p>
+                <p>Kama bidii ingekuwa ndio ufunguo, basi wabeba mizigo wangekuwa mabilionea wa Kariakoo.</p>
+                <p>Hii hapa ndiyo sababu halisi kwanini <strong>bado unateseka:</strong> Unashindana kwenye soko
+                    lililojaa damu kwa kutumia silaha butu ya "Bei Rahisi."</p>
+                <p>Na hivi ndivyo unavyoweza <strong>kutengeneza soko lako binafsi</strong> kuanzia leo, ukijua ukweli
+                    huu mchungu kuhusu saikolojia ya pesa.</p>
+            </div>
+        </section>
 
-                <ul class="space-y-6 text-base md:text-lg text-gray-300 font-science scannable-list arrow">
+        <!-- Problem Section -->
+        <section class="section">
+            <div class="container">
+                <h3 class="chalk-yellow">JE, HII HALI INAKUHUSU?</h3>
+                <ul class="content-list">
                     <li>
-                        <strong class="text-white">Umekuwa ukijaribu kupandisha bei ya bidhaa au huduma yako?</strong> Lakini kila ukijaribu, wateja wanakimbia na kusema "kwa jirani ni rahisi," hivyo unalazimika kurudi kwenye bei za kinyonge ili upate riziki.
+                        <span class="icon-box">👉</span>
+                        <span>Umekuwa ukijaribu <strong>kupandisha bei ya bidhaa au huduma yako</strong> lakini kila
+                            ukijaribu, wateja wanakimbia na kusema "kwa jirani ni rahisi," hivyo unalazimika kurudi
+                            kwenye bei za kinyonge ili upate riziki.</span>
                     </li>
                     <li>
-                        <strong class="text-white">Unahisi kulemewa na madeni ya "Kausha Damu"?</strong> Kila senti unayoipata inaishia kulipa riba, na unajikuta unafanya kazi kubwa kumtajirisha mtu mwingine huku wewe ukibaki na stress.
+                        <span class="icon-box">👉</span>
+                        <span>Unahisi kulemewa na <strong>madeni ya "Kausha Damu"</strong> lakini kila senti unayoipata
+                            inaishia kulipa riba, na unajikuta unafanya kazi kubwa kumtajirisha mtu mwingine huku wewe
+                            ukibaki na stress.</span>
                     </li>
                     <li>
-                        <strong class="text-white">Umetumia miaka mingi na nguvu nyingi kujaribu "Kujituma"?</strong> Lakini bado uko pale pale kiuchumi, wakati unaona wengine (ambao si wachapa kazi kama wewe) wakipiga hatua kubwa na kukuacha nyuma.
+                        <span class="icon-box">👉</span>
+                        <span>Umetumia <strong>miaka mingi na nguvu nyingi</strong> kujaribu <strong>"Kujituma na kupiga
+                                kazi sana"</strong> lakini bado uko pale pale kiuchumi, wakati unaona wengine (ambao si
+                            wachapa kazi kama wewe) wakipiga hatua kubwa na kukuacha nyuma.</span>
+                    </li>
+                </ul>
+                <hr>
+                <p><strong class="chalk-red">🚀 Ukweli ni huu:</strong> Soko la leo halina huruma, lina "Kanuni Mpya"
+                    inayowatajirisha wajanja wachache na kuwafilisi wengi wanaoishi kwa mazoea.</p>
+                <p>Dunia ya kibiashara imebadilika. Zamani, ungemwaga bidhaa dukani na wateja wangekuja. Leo hii,
+                    <strong>kila mtu anauza kitu kile kile.</strong> Kariakoo imejaa, mtandaoni kumejaa. Mteja ana
+                    machaguo elfu moja mkononi mwake.
+                </p>
+                <p>Katika mazingira haya, kuuza "Bidhaa" ni tiketi ya kwenda kaburini. Wenye pesa leo hawauzi bidhaa;
+                    wanauza <strong>Suluhisho na Urahisi.</strong></p>
+            </div>
+        </section>
+
+        <!-- Self-Sabotage -->
+        <section class="section section-alt">
+            <div class="container">
+                <h3>HIVI NDIVYO UNAVYOJIHUJUMU MWENYEWE BILA KUJUA</h3>
+                <p class="text-left">Umegeuza biashara yako kuwa <strong>"Kaburi la Pesa na Muda"</strong> kwa
+                    kung'ang'ania mbinu za kizamani ambazo zinakuulia faida taratibu.</p>
+                <ul class="content-list">
+                    <li>
+                        <span class="icon-box icon-x">❌</span>
+                        <span><strong class="chalk-red">Kujaribu KUSHINDA KWA BEI RAHISI:</strong> Unafikiri ukishusha
+                            bei ndio utapata wateja wengi? Unajidanganya. Unaposhusha bei mpaka unabaki na faida ya
+                            "Buku," unageuka kuwa <strong>Ombaomba wa Soko.</strong> Unakaribisha wateja wabahili wasio
+                            na heshima, na unajiweka kwenye Race to the Bottom (Mashindano ya kwenda shimoni). Matokeo
+                            yake ni <strong>Kufilisika kwa Uchovu.</strong></span>
+                    </li>
+                    <li>
+                        <span class="icon-box icon-x">❌</span>
+                        <span><strong class="chalk-red">Kutegemea MBINU YA KASUKU (Copy & Paste):</strong> Umeanzisha
+                            biashara hiyo kwa sababu tu "Jirani anafanya na inamlipa." Hujui siri zake, hujui mbinu
+                            zake. Kwa kuiga kila kitu, unajiondolea utofauti. Mteja akikuangalia wewe na jirani yako,
+                            haoni tofauti, kwa hiyo anakupangia bei. Matokeo yake ni <strong>Kudharauliwa na
+                                Soko.</strong></span>
+                    </li>
+                    <li>
+                        <span class="icon-box icon-x">❌</span>
+                        <span><strong class="chalk-red">Kufanya KUPAMBA KABURI (Surface Branding):</strong> Umetumia
+                            pesa ya mkopo kununua fanicha kali ofisini, kutengeneza logo ya gharama, na kuchapa business
+                            cards, wakati biashara haina mfumo wa mauzo. Huu ni ushamba. Unataka kuonekana "Boss" kwa
+                            nje wakati ndani unateketea. Matokeo yake ni <strong>Aibu ya Nguo za
+                                Sikukuu</strong>—kupendeza nje huku mfuko umetoboka.</span>
+                    </li>
+                    <li>
+                        <span class="icon-box icon-x">❌</span>
+                        <span><strong class="chalk-red">Kung'ang'ania KUFANYA KILA KITU MWENYEWE:</strong> Unaogopa
+                            kuajiri au kutumia mifumo kwa kisingizio cha "Kubana Matumizi." Unajikuta wewe ndiye meneja,
+                            wewe ndiye mesenja, na wewe ndiye mlinzi. Huna biashara; una <strong>Ajira ya
+                                Kitumwa</strong> uliyojipa mwenyewe. Matokeo yake ni <strong>Uchovu wa Punda</strong> na
+                            kukosa muda wa kuwaza makubwa.</span>
                     </li>
                 </ul>
             </div>
         </section>
 
-        <!-- THE TRUTH (SOKO LA LEO) -->
-        <section class="py-16 container mx-auto px-4 max-w-5xl">
-            <div class="chalk-box text-center">
-                <p class="font-chalk-hand text-xl md:text-2xl text-yellow-400 mb-4">
-                    🚀 Ukweli ni huu: Soko la leo halina huruma.
-                </p>
-                <p class="text-gray-300 text-left md:text-center font-science">
-                    Lina "Kanuni Mpya" inayowatajirisha wajanja wachache na kuwafilisi wengi wanaoishi kwa mazoea.
-                    Dunia ya kibiashara imebadilika. Zamani, ungemwaga bidhaa dukani na wateja wangekuja. Leo hii, kila mtu anauza kitu kile kile. Kariakoo imejaa, mtandaoni kumejaa. Mteja ana machaguo elfu moja mkononi mwake.
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8 my-12">
-                <div>
-                    <h3 class="font-chalk-heading text-xl text-red-500 mb-4">⚠️ TATIZO KUBWA...</h3>
-                    <p class="text-gray-300 font-science mb-4">
-                        Wafanyabiashara wengi bado wamekwama kwenye "Zamani." Bado wanapambana kwa Kushusha Bei wakiamini ndiyo njia ya kushinda.
-                    </p>
-                    <p class="text-gray-300 font-science">
-                        Hawaoni kwamba Mfumuko wa Bei (Inflation) unakula faida yao ndogo kila siku.
-                        Hawaoni kwamba kila wanapopunguza bei, wanajisogeza karibu zaidi na Kufilisika.
-                    </p>
-                </div>
-                <div class="border-l-2 border-gray-600 pl-6 flex flex-col justify-center">
-                    <p class="font-chalk-hand text-lg text-white italic mb-4">
-                        "Utaendelea kukimbizana na wateja wa buku-buku na kurudi nyumbani umechoka huku madeni yakikungoja mlangoni mpaka lini?"
-                    </p>
-                    <p class="font-chalk-hand text-lg text-white italic">
-                        "Uko tayari kuona biashara yako ikimezwa na 'Mafuriko ya Kasuku' wapya wanaoiga kila kitu unachofanya?"
-                    </p>
-                </div>
-            </div>
-
-            <div class="text-center mt-12">
-                <h3 class="font-chalk-heading text-2xl text-green-500 mb-4">💡 HABARI NJEMA</h3>
-                <p class="text-gray-300 font-science max-w-3xl mx-auto">
-                    Kuna njia ya kutoka. Kuna Mfumo wa Kisayansi unaotumiwa na wale wachache wanaotawala soko kimyakimya. Sio uchawi. Ni mbinu ya kisaikolojia ya Kugeuza Kero kuwa Pesa na Kuuza Thamani badala ya Bidhaa.
-                </p>
+        <!-- Solution Intro -->
+        <section class="section">
+            <div class="container">
+                <h3>TATIZO SIO WEWE, TATIZO NI RAMANI YAKO</h3>
+                <p class="text-left">Nataka uvute pumzi ndefu. Usiwe na hatia. Kufeli huku siyo kwa sababu wewe ni
+                    mjinga. Ni kwa sababu unatumia <strong>"Zana Butu"</strong> kwenye vita ya kisasa.</p>
+                <p class="text-left">Umeaminishwa kuwa "Bidii" ndiyo ufunguo, ukasahau kuwa "Mkakati" ndio kufuli.
+                    Huwezi kufungua mlango wa chuma kwa kuusukuma kwa nguvu; unahitaji ufunguo sahihi.</p>
+                <p class="text-left">Kuna njia tofauti. Kuna njia ambayo <strong>Wafanyabiashara wa Kimkakati</strong>
+                    wanaitumia. Hawaamki saa 11 kukimbiza wateja; wanatengeneza mifumo inayofanya wateja wawakimbilie
+                    wao. Hawashindani kwa bei; wanauza <strong>Thamani</strong> na <strong>Urahisi</strong> kiasi kwamba
+                    mteja anaona aibu kuomba punguzo.</p>
+                <p class="text-left">Huu si uchawi. Ni <strong>Mfumo wa Kisayansi</strong> wa kubadili kero kuwa pesa,
+                    na uko karibu kuugundua.</p>
             </div>
         </section>
 
-        <!-- DEEP AGITATION (KUSUKUMA UKUTA) -->
-        <section class="py-16 bg-white/5 border-y border-gray-700">
-            <div class="container mx-auto px-4 max-w-4xl">
-                <h2 class="font-chalk-heading text-3xl text-center mb-8">HIVI UNAPANGA KUENDELEA KUSUKUMA UKUTA MPAKA LINI?</h2>
-                <p class="text-gray-300 font-science mb-8 text-center">
-                    Hebu tuangaliane usoni na tuseme ukweli. Umekuwa ukipambana. Umejituma. Lakini ukifunga hesabu mwisho wa mwezi, unajikuta pale pale ulipoanzia. Unahisi kama umefungiwa kwenye gereza lisiloonekana.
-                </p>
-
-                <div class="bg-black p-8 border border-red-900 mb-8">
-                    <h3 class="font-chalk-hand text-2xl text-red-500 mb-6 text-center">HIVI NDIVYO UNAVYOJIHUJUMU MWENYEWE BILA KUJUA</h3>
-                    <ul class="scannable-list cross font-science text-gray-300">
-                        <li>
-                            <strong class="text-white">Kujaribu KUSHINDA KWA BEI RAHISI:</strong> Unafikiri ukishusha bei ndio utapata wateja wengi? Unageuka kuwa Ombaomba wa Soko. Unakaribisha wateja wabahili na unajiweka kwenye "Race to the Bottom".
-                        </li>
-                        <li>
-                            <strong class="text-white">Kutegemea MBINU YA KASUKU (Copy & Paste):</strong> Unaiga kila kitu anachofanya jirani yako. Hujui siri zake. Mteja haoni tofauti, kwa hiyo anakupangia bei.
-                        </li>
-                        <li>
-                            <strong class="text-white">Kufanya KUPAMBA KABURI (Surface Branding):</strong> Unatumia pesa ya mkopo kununua fanicha kali na logo ya gharama huku huna mfumo wa mauzo. Huu ni ushamba. Unateketea ndani.
-                        </li>
-                        <li>
-                            <strong class="text-white">Kung'ang'ania KUFANYA KILA KITU MWENYEWE:</strong> Unaogopa mifumo kwa kisingizio cha "Kubana Matumizi." Unajikuta wewe ni meneja, mesenja na mlinzi. Huna biashara; una Ajira ya Kitumwa.
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="text-center">
-                    <p class="font-chalk-heading text-xl text-yellow-400 mb-2">TATIZO SIO WEWE, TATIZO NI RAMANI YAKO.</p>
-                    <p class="font-science text-gray-400">
-                        Umeaminishwa kuwa "Bidii" ndiyo ufunguo, ukasahau kuwa "Mkakati" ndio kufuli. Huwezi kufungua mlango wa chuma kwa kuusukuma kwa nguvu.
-                    </p>
-                </div>
+        <!-- Imagine Section -->
+        <section class="section section-alt">
+            <div class="container">
+                <h3 class="chalk-yellow">FIKIRIA UKIWEZA...</h3>
+                <p class="text-left">Kujenga biashara inayokupa heshima ya <strong>"Mtu Mzito"</strong> mtaani, ambapo
+                    wateja wanakutafuta wewe na wanakulipa kabla hata hujatoa huduma.</p>
+                <p class="text-left">Fikiria ukiweza kupata matokeo haya:</p>
+                <ul class="content-list">
+                    <li><span class="icon-box icon-check">✅</span><span><strong>Bila kupoteza Pesa</strong> kwenye
+                            mashindano ya kijinga ya kushushiana bei.</span></li>
+                    <li><span class="icon-box icon-check">✅</span><span><strong>Bila kuhangaika na Wateja
+                                Wasumbufu</strong> ambao hawana uwezo wa kukulipa.</span></li>
+                    <li><span class="icon-box icon-check">✅</span><span><strong>Bila kuogopa "Kurogwa"</strong> au
+                            kuonekana, kwa sababu una mfumo unaojilinda wenyewe.</span></li>
+                </ul>
+                <p class="text-left">Na uzuri ni kwamba... Hii haihitaji uwe na elimu ya chuo kikuu au uwe mtoto wa
+                    kishua. Inafanya kazi hata kama biashara yako ni ndogo, hata kama uko mtaani, na hata kama huna jina
+                    kubwa leo.</p>
             </div>
         </section>
 
-        <!-- THE PIVOT & SOLUTION -->
-        <section class="py-16 container mx-auto px-4 max-w-5xl">
-            <h2 class="font-chalk-heading text-3xl text-center mb-8">NIKUAMBIE UKWELI AMBAO HUENDA USIPENDE KUUSIKIA...</h2>
-            
-            <div class="grid md:grid-cols-2 gap-10">
-                <div>
-                    <p class="text-gray-300 font-science mb-4">
-                        Umeaminishwa kwa miaka mingi kuwa siri ya mafanikio ni "Kushusha Bei" na "Kujituma." Kama unatafuta njia nyingine ya kushusha bei ili "uue soko," hapa si mahali pako.
+        <!-- Product -->
+        <section class="section">
+            <div class="container">
+                <div class="product-content">
+                    <h2>HII HAPA SILAHA ULIYOKUWA UKIISUBIRI: "PAMBANA, PASUA, PATA"</h2>
+                    <p class="product-subtitle">Manual ya Vita kwa Mfanyabiashara</p>
+                    <p class="text-left">Sikiliza kwa makini: Hiki siyo "Kitabu cha Kusoma na Kuweka Kabatini." Hii ni
+                        <strong>Manual ya Vita.</strong> Ni mwongozo wa hatua kwa hatua wa kufanya "Upasuaji" wa
+                        biashara yako na maisha yako.
                     </p>
-                    <p class="text-gray-300 font-science">
-                        Vipi nikikuambia kuwa unaweza kutoka hapo ulipo SASA HIVI?
-                        <br><br>
-                        ❌ HAUHITAJI mtaji wa mamilioni.<br>
-                        ❌ HAUHITAJI kupunguza bei mpaka uumie.<br>
-                        ❌ HAUHITAJI kuwa na ofisi Posta.
+                    <p class="text-left">Kimetengenezwa kwa kutumia <strong>Mfumo wa Sayansi ya Kugeuza Kero kuwa
+                            Pesa</strong>, mfumo ambao umewatoa watu kwenye madeni ya aibu na kuwapa heshima ya kifalme.
                     </p>
                 </div>
-                <div class="bg-gray-800/50 p-6 border-l-4 border-green-500">
-                    <h3 class="font-chalk-hand text-xl text-green-400 mb-4">NJIA YA KISASA YA KUTAWALA SOKO</h3>
-                    <p class="text-gray-300 font-science text-sm mb-4">Badala ya kupambana na hayo makosa, Mfumo wa Biashara ya Suluhisho unakupa njia ya mkato:</p>
-                    <ul class="scannable-list check text-sm font-science text-gray-300">
-                        <li><strong class="text-white">Badala ya Kushusha Bei:</strong> Tunatumia "Kemia ya Maumivu" kugeuza bidhaa kuwa dawa.</li>
-                        <li><strong class="text-white">Badala ya Kuiga:</strong> Tunatumia "Kodi ya Uvivu" kutengeneza ofa ya Urahisi na Muda.</li>
-                        <li><strong class="text-white">Badala ya Kupamba Ofisi:</strong> Tunatumia "Bima ya Imani" kujenga brand ya mtaalam.</li>
-                    </ul>
+                <h3>UTAFUNULIWA NINI UKIFUNGUA UKURASA WA KWANZA?</h3>
+                <p class="text-left">Ndani ya kurasa hizi, hakuna porojo. Kuna nondo tupu:</p>
+                <ul class="feature-list">
+                    <li><span class="icon-box icon-check">✅</span><span><strong>Siri ya Thermostat ya Umaskini:</strong>
+                            Jinsi ya kuvunja "Kipimajoto" cha ndani kinachokufanya upoteze pesa kila inapozidi kiwango
+                            ulichozoea, na jinsi ya kukirekebisha ili uanze kuvutia mamilioni.</span></li>
+                    <li><span class="icon-box icon-check">✅</span><span><strong>Mbinu ya "Ijumaa Kareem":</strong> Jinsi
+                            ya kutumia ugonjwa wa "Retail Therapy" wa wateja kwa faida yako, kwa kuwauzia suluhisho la
+                            hisia badala ya bidhaa tu.</span></li>
+                    <li><span class="icon-box icon-check">✅</span><span><strong>Dawa ya "Mimi Sio Ghali":</strong> Jinsi
+                            ya kuacha tetemeko la kutaja bei na kuanza kudai haki yako kwa ujasiri, kiasi kwamba mteja
+                            anaona aibu kukuomba punguzo.</span></li>
+                    <li><span class="icon-box icon-check">✅</span><span><strong>Kifo cha "Kausha Damu":</strong> Mkakati
+                            wa kugeuza bidhaa yako kuwa "Huduma ya Urahisi" ili uweze kulipa madeni yanayokukaba koo
+                            bila kuhitaji mtaji wa nyongeza.</span></li>
+                    <li><span class="icon-box icon-check">✅</span><span><strong>Ukijua Hili Hutauza Tena
+                                Kishamba:</strong> Kwa nini kuuza "Sifa za Bidhaa" (Features) kunakuua, na jinsi ya
+                            kutumia "Emotional Triggers" kumfanya mteja akupe pesa haraka.</span></li>
+                </ul>
+                <div class="product-image">
+                    <img src="https://i.ibb.co/0RbSYSrT/Pambana-Pasua-Pata-Ebook-Cover.png" alt="Pambana Pasua Pata">
                 </div>
             </div>
         </section>
 
-        <!-- THE PRODUCT REVEAL -->
-        <section class="py-16 bg-white/5 border-t border-gray-700">
-            <div class="container mx-auto px-4 max-w-5xl text-center">
-                <h2 class="font-chalk-heading text-3xl md:text-5xl mb-4 text-yellow-400">
-                    UKO TAYARI KUONA KILICHOMO NDANI?
-                </h2>
-                <p class="font-science text-gray-400 mb-12">Hii hapa silaha uliyokuwa ukiisubiri.</p>
-                
-                <div class="flex flex-col md:flex-row items-center justify-center gap-12">
-                    <!-- PDF Cover Image -->
-                    <div class="w-full md:w-1/3 flex justify-center">
-                        <img src="https://i.ibb.co/0RbSYSrT/Pambana-Pasua-Pata-Ebook-Cover.png" 
-                             alt="Pambana Pasua Pata Ebook Cover" 
-                             class="w-4/5 md:w-full shadow-[0_0_30px_rgba(255,255,255,0.1)] transform hover:scale-105 transition duration-500">
+        <!-- Bonuses -->
+        <section class="section section-alt">
+            <div class="container">
+                <h2>SIO HICHO TU... CHUKUA NA HIZI ZAWADI ZA BURE (LEO PEKEE)</h2>
+                <p>Nikiamini kuwa unataka kubadilika kweli, nimekuandalia "Zana za Kazi" ili usikwame. Ukichukua kitabu
+                    hiki leo, unapata na hizi bure:</p>
+
+                <div class="bonus-card">
+                    <img src="bonus1.jpg" alt="Checklist ya Thermostat">
+                    <div class="bonus-card-content">
+                        <span class="bonus-badge">Bonasi #1</span>
+                        <h4>"CHECKLIST YA UKAGUZI WA THERMOSTAT"</h4>
+                        <p class="bonus-value">Thamani: Tsh 15,000</p>
+                        <p>Ni PDF fupi ya ukurasa mmoja yenye maswali 10 ya kisaikolojia yanayofanya kazi kama "X-Ray"
+                            ya akili yako. Itakuonyesha ndani ya dakika 5 wapi unajihujumu (Self-Sabotage).</p>
                     </div>
+                </div>
 
-                    <!-- Book Content -->
-                    <div class="w-full md:w-2/3 text-left">
-                        <h3 class="font-chalk-heading text-3xl text-white mb-2">PAMBANA, PASUA, PATA</h3>
-                        <p class="text-red-500 font-chalk-hand text-lg mb-6">Manual ya Vita kwa Mfanyabiashara</p>
-                        
-                        <div class="bg-black/50 p-6 border border-gray-600 rounded-sm">
-                            <h4 class="font-chalk-hand text-xl mb-4 text-white border-b border-gray-700 pb-2">UTAFUNULIWA NINI NDANI?</h4>
-                            <ul class="space-y-4 font-science text-gray-300 scannable-list check text-sm md:text-base">
-                                <li>
-                                    <strong class="text-white">Siri ya Thermostat ya Umaskini:</strong> Jinsi ya kuvunja "Kipimajoto" cha ndani kinachokufanya upoteze pesa, na jinsi ya kukirekebisha ili uanze kuvutia mamilioni.
-                                </li>
-                                <li>
-                                    <strong class="text-white">Mbinu ya "Ijumaa Kareem":</strong> Jinsi ya kutumia ugonjwa wa "Retail Therapy" kuwauzia suluhisho la hisia badala ya bidhaa tu.
-                                </li>
-                                <li>
-                                    <strong class="text-white">Dawa ya "Mimi Sio Ghali":</strong> Jinsi ya kuacha tetemeko la kutaja bei na kuanza kudai haki yako kwa ujasiri.
-                                </li>
-                                <li>
-                                    <strong class="text-white">Kifo cha "Kausha Damu":</strong> Mkakati wa kugeuza bidhaa yako kuwa "Huduma ya Urahisi" ili uweze kulipa madeni bila mtaji wa nyongeza.
-                                </li>
-                                <li>
-                                    <strong class="text-white">Ukijua Hili Hutauza Tena Kishamba:</strong> Kwa nini kuuza "Sifa za Bidhaa" kunakuua, na jinsi ya kutumia "Emotional Triggers".
-                                </li>
-                            </ul>
-                        </div>
+                <div class="bonus-card">
+                    <img src="bonus2.jpg" alt="Script ya Bei">
+                    <div class="bonus-card-content">
+                        <span class="bonus-badge">Bonasi #2</span>
+                        <h4>"SCRIPT YA KUCHOKONOA BEI"</h4>
+                        <p class="bonus-value">Thamani: Tsh 20,000</p>
+                        <p>Ni Digital Card yenye maneno halisi (Word-for-Word Script) ya kumwambia mteja anayesema
+                            "Punguza Bei." Ukiikariri, mteja anaacha kubishana, anakuheshimu, na anatoa pesa.</p>
+                    </div>
+                </div>
+
+                <div class="bonus-card">
+                    <img src="bonus3.jpg" alt="Ramani ya Brand">
+                    <div class="bonus-card-content">
+                        <span class="bonus-badge">Bonasi #3</span>
+                        <h4>"RAMANI YA KUJENGA BRAND YA MTU WA UHAKIKA"</h4>
+                        <p class="bonus-value">Thamani: Tsh 25,000</p>
+                        <p>Mwongozo wa Matendo (Action Plan) wa Siku 7. Inakuonyesha jinsi ya kuposti na kuonekana kama
+                            "Mtaalam" (Expert) na sio "Machinga," hata kama una followers 50 tu.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- BONUSES SECTION -->
-        <section class="py-16 bg-red-900/10 border-y border-red-900/30">
-            <div class="container mx-auto px-4 max-w-6xl">
-                <h2 class="font-chalk-heading text-3xl md:text-4xl text-center mb-4">
-                    CHUKUA NA HIZI <span class="text-red-500">ZAWADI ZA BURE</span>
-                </h2>
-                <p class="text-center text-gray-400 mb-12 font-science uppercase tracking-widest text-sm">(KWA AJILI YA LEO PEKEE)</p>
-
-                <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Bonus 1 -->
-                    <div class="group bg-black border border-gray-700 hover:border-yellow-400 transition duration-300">
-                        <div class="h-48 overflow-hidden relative">
-                            <span class="absolute top-2 left-2 bg-yellow-500 text-black px-2 py-1 text-xs font-bold font-science z-10">BONASI #1</span>
-                            <img src="https://i.ibb.co/xtsQwXSK/Whisk-375c017f821b6db83684f30a2f62ca2feg-1.png" alt="Checklist Bonus" class="object-cover h-full w-full opacity-80 group-hover:opacity-100 transition">
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-chalk-hand text-xl text-yellow-400 mb-2">Checklist ya Ukaguzi wa Thermostat</h4>
-                            <p class="text-xs text-gray-500 mb-2 font-mono">Thamani: Tsh 15,000</p>
-                            <p class="text-sm text-gray-300 font-science">Karatasi maalum ya kujua wapi unajihujumu (Self-Sabotage) na jinsi ya kupanda daraja mara moja.</p>
-                        </div>
+        <!-- Pricing -->
+        <section class="section">
+            <div class="container">
+                <h2>HII HAPA HESABU YAKO KAMILI</h2>
+                <p>Hebu tuweke kila kitu kwenye mizani uone unachopewa:</p>
+                <div class="price-box">
+                    <div class="price-row"><span>📖 Kitabu "PAMBANA, PASUA, PATA"</span><span class="old-price">Tsh
+                            20,000</span></div>
+                    <div class="price-row"><span>🎁 Checklist ya Thermostat</span><span class="old-price">Tsh
+                            15,000</span></div>
+                    <div class="price-row"><span>🎁 Script ya Bei</span><span class="old-price">Tsh 20,000</span></div>
+                    <div class="price-row"><span>🎁 Ramani ya Brand</span><span class="old-price">Tsh 25,000</span>
                     </div>
-
-                    <!-- Bonus 2 -->
-                    <div class="group bg-black border border-gray-700 hover:border-yellow-400 transition duration-300">
-                        <div class="h-48 overflow-hidden relative">
-                            <span class="absolute top-2 left-2 bg-yellow-500 text-black px-2 py-1 text-xs font-bold font-science z-10">BONASI #2</span>
-                            <img src="https://i.ibb.co/MxQQbyvZ/Whisk-d9783a8d858713199bc46123481512ddeg.png" alt="Script Bonus" class="object-cover h-full w-full opacity-80 group-hover:opacity-100 transition">
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-chalk-hand text-xl text-yellow-400 mb-2">Script ya Kuchokonoa Bei</h4>
-                            <p class="text-xs text-gray-500 mb-2 font-mono">Thamani: Tsh 20,000</p>
-                            <p class="text-sm text-gray-300 font-science">Hujui umwambie nini mteja anayelalamika bei? Tumia Script hii ya maneno yaliyopangwa kisaikolojia.</p>
-                        </div>
-                    </div>
-
-                    <!-- Bonus 3 -->
-                    <div class="group bg-black border border-gray-700 hover:border-yellow-400 transition duration-300">
-                        <div class="h-48 overflow-hidden relative">
-                            <span class="absolute top-2 left-2 bg-yellow-500 text-black px-2 py-1 text-xs font-bold font-science z-10">BONASI #3</span>
-                            <img src="https://i.ibb.co/27Hpds0g/Whisk-cd6c9b01056dfe484c8496c06bfe6bf6eg.png" alt="Brand Bonus" class="object-cover h-full w-full opacity-80 group-hover:opacity-100 transition">
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-chalk-hand text-xl text-yellow-400 mb-2">Ramani ya Brand ya Mtu wa Uhakika</h4>
-                            <p class="text-xs text-gray-500 mb-2 font-mono">Thamani: Tsh 25,000</p>
-                            <p class="text-sm text-gray-300 font-science">Mwongozo wa siku 7 wa jinsi ya kuposti na kuongea mtandaoni ili uonekane kama "Mtaalam" na sio "Machinga".</p>
-                        </div>
-                    </div>
+                    <div class="price-row price-total"><span>💰 JUMLA YA THAMANI</span><span class="old-price">Tsh
+                            80,000</span></div>
                 </div>
+                <p>Lakini, kwa sababu nataka nikuondoe kwenye hicho "Kitanzi cha Kausha Damu" leo, sitakutoza elfu 80.
+                    Wala sitakutoza nusu yake (40,000).</p>
+                <div class="final-price">
+                    <p class="final-price-label">Leo Unalipa Tu</p>
+                    <p class="final-price-amount">5,000/=</p>
+                    <p class="final-price-note">Tsh Elfu Tano Tu. Buku Tano.</p>
+                </div>
+                <p>Hii ni pesa ndogo kuliko unayotumia kununua bando la wiki la kuangalia umbea Instagram. Ni pesa ndogo
+                    kuliko nauli ya kwenda mjini na kurudi bila faida. Ni pesa ndogo kuliko bia mbili unazowahonga
+                    washkaji ili uonekane unazo.</p>
+                <p><strong>Unatoa pesa kila siku kuwafurahisha wengine. Leo, toa hii elfu tano tu ili Ujijenge Wewe
+                        Mwenyewe.</strong></p>
+                <button class="btn-cta" onclick="openModal()">NATAKA KITABU NA ZAWADI ZANGU ZOTE - TSH 5,000</button>
+                <p style="margin-top: 16px; font-size: 13px; color: var(--chalk-red);">⚠️ Zawadi zinaweza kuondolewa
+                    muda wowote</p>
             </div>
         </section>
 
-        <!-- PRICING STACK -->
-        <section class="py-20 container mx-auto px-4 text-center">
-            <h2 class="font-chalk-heading text-3xl mb-8">HII HAPA HESABU YAKO KAMILI</h2>
-            
-            <div class="bg-white/5 max-w-2xl mx-auto p-8 border border-gray-600 mb-8 text-left">
-                <div class="flex justify-between border-b border-gray-700 py-2">
-                    <span class="font-science text-gray-300">Kitabu cha "PAMBANA, PASUA, PATA"</span>
-                    <span class="font-science text-gray-400 line-through">Tsh 20,000</span>
-                </div>
-                <div class="flex justify-between border-b border-gray-700 py-2">
-                    <span class="font-science text-gray-300">Bonus #1: Checklist ya Thermostat</span>
-                    <span class="font-science text-gray-400 line-through">Tsh 15,000</span>
-                </div>
-                <div class="flex justify-between border-b border-gray-700 py-2">
-                    <span class="font-science text-gray-300">Bonus #2: Script ya Bei</span>
-                    <span class="font-science text-gray-400 line-through">Tsh 20,000</span>
-                </div>
-                <div class="flex justify-between border-b border-gray-700 py-2">
-                    <span class="font-science text-gray-300">Bonus #3: Ramani ya Brand</span>
-                    <span class="font-science text-gray-400 line-through">Tsh 25,000</span>
-                </div>
-                <div class="flex justify-between py-4 mt-2">
-                    <span class="font-chalk-heading text-xl text-white">JUMLA YA THAMANI:</span>
-                    <span class="font-chalk-heading text-xl text-white line-through decoration-red-500 decoration-2">Tsh 80,000</span>
-                </div>
+        <!-- Guarantee -->
+        <section class="section section-alt">
+            <div class="guarantee">
+                <div class="guarantee-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>DHAMANA YA SIKU 30</h3>
+                <p style="margin:0; text-align: left;">Chukua kitabu hiki cha "PAMBANA, PASUA, PATA." Kisome. Kifanyie
+                    kazi kwa <strong>Siku 30 nzima.</strong> Kama ukiona hakijakupa thamani yoyote, au ukiona ni "Pumba"
+                    tupu, nitumie ujumbe. Nitakurudishia pesa yako yote (100%) bila kukuuliza maswali ya kijinga.</p>
             </div>
-
-            <p class="mt-8 font-chalk-hand text-2xl text-white mb-2">LEO PEKEE UNALIPA:</p>
-            
-            <div class="my-6 relative inline-block">
-                <span class="font-chalk-heading text-7xl md:text-8xl text-yellow-400 drop-shadow-lg block">5,000/=</span>
-                <span class="text-xl text-gray-400 mt-2 font-science block">Tsh Elfu Tano Tu (Buku Tano).</span>
-            </div>
-
-            <p class="max-w-xl mx-auto text-gray-300 mb-8 font-science">
-                Hii ni pesa ndogo kuliko bando la wiki. Ni pesa ndogo kuliko nauli ya kwenda mjini na kurudi bila faida. Unatoa pesa kila siku kuwafurahisha wengine. Leo, toa hii elfu tano tu ili Ujijenge Wewe Mwenyewe.
-            </p>
-
-            <button onclick="openModal()" class="btn-action px-10 py-5 text-xl md:text-3xl w-full md:w-auto shadow-[0_0_20px_rgba(255,0,0,0.5)] animate-pulse">
-                NIPATIE NAKALA YANGU SASA <i class="fas fa-download ml-2"></i>
-            </button>
-            <p class="mt-4 text-xs font-science text-red-400 uppercase tracking-widest">
-                ⚠ Zawadi hizi zinaweza kuondolewa muda wowote
-            </p>
         </section>
 
-        <!-- GUARANTEE -->
-        <section class="py-16 bg-black/40">
-            <div class="container mx-auto px-4 text-center max-w-3xl">
-                <div class="border-2 border-dashed border-gray-500 p-8 relative">
-                    <i class="fas fa-shield-alt text-5xl text-gray-500 absolute -top-6 left-1/2 transform -translate-x-1/2 bg-[#1a1c20] px-4"></i>
-                    <h3 class="font-chalk-heading text-2xl mt-4 mb-4 text-white">SICHUKUI PESA YENYE MANUNG'UNIKO</h3>
-                    <p class="font-science text-gray-300">
-                        Ndugu yangu, nimejenga jina langu kwa muda mrefu. Sijajenga heshima yangu kwa kuwatapeli watu Tsh 5,000.
-                        Chukua kitabu hiki. Kisome. Kifanyie kazi kwa Siku 30 nzima.
-                        Kama ukiona hakijakupa thamani yoyote, nitumie ujumbe. Nitakurudishia pesa yako yote (100%) bila kukuuliza maswali ya kijinga.
+        <!-- FAQ -->
+        <section class="section">
+            <div class="container">
+                <h2>MASWALI NA MAJIBU YA MOTO</h2>
+                <div class="faq-item">
+                    <h4>❓ "Ngariba, isije ikawa wewe ni wale wahamasishaji (Motivational Speakers) wa 'Jiamini
+                        Utafanikiwa'?"</h4>
+                    <p>Sikiliza, mimi sina muda wa kukubembeleza ujiamini. Hamasa ni kama kuoga; inaisha kesho asubuhi.
+                        Hiki kitabu siyo "Motivation," ni <strong>Manual ya Vita.</strong> Sikuandikii ili ujisikie
+                        vizuri; nakuandikia mbinu za <strong>Kijeshi</strong> za jinsi ya kupanga bei, jinsi ya kugeuza
+                        bidhaa kuwa huduma, na jinsi ya kulipa madeni. Kama unataka kubembelezwa, nenda kanunue riwaya
+                        ya mapenzi. Kama unataka <strong>Mkakati wa Pesa</strong>, uko mahali sahihi.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>❓ "Biashara yangu ni tofauti (nauza Mchele/Nguo/Chakula), je hii itanifaa?"</h4>
+                    <p>Hicho ndicho kisingizio kinachokuweka maskini. Sheria za Pesa ni kama Sheria za Fizikia;
+                        hazibagui. Mfumo wa <strong>Alchemy ya Thamani</strong> unafanya kazi kwa kila kitu. Kama unauza
+                        Mchele, kitakufundisha kuacha kuuza "Kilo" na kuanza kuuza "Kifurushi cha Familia." Kama unauza
+                        Nguo, kitakufundisha kuacha kuuza "Mitumba" na kuanza kuuza "Muonekano." Usitumie "Utofauti"
+                        kama kichaka cha kujificha. Kanuni ni ile ile: <strong>Geuza Kero kuwa Pesa.</strong></p>
+                </div>
+                <div class="faq-item">
+                    <h4>❓ "Sina mtaji wa ziada wa kufanya mabadiliko haya, nitawezaje?"</h4>
+                    <p>Hiyo ndiyo sababu <strong>HASWA</strong> inayokulazimu kusoma kitabu hiki. Mbinu ninazofundisha
+                        hazihitaji uende benki kukopa milioni 10. Zinahitaji ubadilishe <strong>Maneno Yako</strong> na
+                        <strong>Ofa Yako.</strong> Kubadili jinsi unavyopanga bei haigharimu pesa. Kubadili jinsi
+                        unavyomjibu mteja haigharimu pesa. Mtaji mkubwa kuliko wote ni <strong>Akili</strong>, na hiyo
+                        ndiyo niliyoiweka humu kwa Tsh 5,000 tu.
                     </p>
                 </div>
-            </div>
-        </section>
-
-        <!-- FAQ SECTION -->
-        <section class="py-16 container mx-auto px-4 max-w-4xl">
-            <h2 class="font-chalk-heading text-3xl text-center mb-10">MASWALI NA MAJIBU YA MOTO</h2>
-
-            <div class="space-y-6">
-                <div class="border-b border-gray-700 pb-4">
-                    <h4 class="font-bold text-lg mb-2 text-white">❓ "Ngariba, isije ikawa wewe ni wale Motivational Speakers?"</h4>
-                    <p class="text-gray-400 font-science">JIBU: Sikiliza, mimi sina muda wa kukubembeleza. Hamasa ni kama kuoga; inaisha. Hiki kitabu siyo "Motivation," ni Manual ya Vita. Mbinu za Kijeshi za jinsi ya kupanga bei na kulipa madeni.</p>
+                <div class="faq-item">
+                    <h4>❓ "Unajua Wabongo wanapenda vitu rahisi, hawaelewi thamani (Premium Price)."</h4>
+                    <p>Huo ni uongo mweupe. Wabongo hao hao wanaosema "Hali ngumu" ndio wanajaza baa kila Ijumaa. Ndio
+                        wanaonunua iPhone za milioni 3. Ndio wanaochangia harusi mamilioni. Watu hawanunui bei rahisi;
+                        wananunua kile wanachokiona lina <strong>Thamani.</strong> Kama wanakunyima pesa, ni kwa sababu
+                        hujawaonyesha thamani, umewaonyesha bidhaa. Acha kulaumu soko, jifunze kuliendesha soko.</p>
                 </div>
-                <div class="border-b border-gray-700 pb-4">
-                    <h4 class="font-bold text-lg mb-2 text-white">❓ "Biashara yangu ni tofauti (nauza Mchele/Nguo), je hii itanifaa?"</h4>
-                    <p class="text-gray-400 font-science">JIBU: Hicho ndicho kisingizio kinachokuweka maskini. Sheria za Pesa hazibagui. Kanuni ni ile ile: Geuza Kero kuwa Pesa.</p>
-                </div>
-                <div class="border-b border-gray-700 pb-4">
-                    <h4 class="font-bold text-lg mb-2 text-white">❓ "Sina mtaji wa ziada wa kufanya mabadiliko haya..."</h4>
-                    <p class="text-gray-400 font-science">JIBU: Hiyo ndiyo sababu HASWA inayokulazimu kusoma kitabu hiki. Mbinu hizi hazihitaji uende benki. Zinahitaji ubadilishe Maneno Yako na Ofa Yako.</p>
-                </div>
-                <div class="border-b border-gray-700 pb-4">
-                    <h4 class="font-bold text-lg mb-2 text-white">❓ "Unajua Wabongo wanapenda vitu rahisi, hawaelewi thamani."</h4>
-                    <p class="text-gray-400 font-science">JIBU: Huo ni uongo mweupe. Wabongo hao hao ndio wanajaza baa na kununua iPhone. Watu hawanunui bei rahisi; wananunua Thamani. Acha kulaumu soko, jifunze kuliendesha.</p>
-                </div>
-                <div class="border-b border-gray-700 pb-4">
-                    <h4 class="font-bold text-lg mb-2 text-white">❓ "Sina muda wa kusoma, niko busy sana napambana."</h4>
-                    <p class="text-gray-400 font-science">JIBU: Uko busy kutengeneza pesa au kutafuta pesa? Heri utumie masaa 3 kusoma mkakati utakaokuokoa miaka 3 ya kuhangaika bure.</p>
+                <div class="faq-item">
+                    <h4>❓ "Sina muda wa kusoma, niko busy sana napambana."</h4>
+                    <p>Uko busy kutengeneza pesa au uko busy kutafuta pesa? Kuna tofauti. Kama uko busy mwaka nenda rudi
+                        lakini maisha hayasongi, huo siyo ubusy; ni <strong>Uvivu uliovaa suti.</strong> Unakimbizana na
+                        wateja wa buku-buku kutwa nzima ndio maana huna muda. Soma kitabu hiki ili uweze kujenga mfumo
+                        utakaokupa huo muda unaoulilia. Heri utumie masaa 3 kusoma mkakati utakaokuokoa miaka 3 ya
+                        kuhangaika bure.</p>
                 </div>
             </div>
         </section>
 
-        <!-- FINAL CTA (CROSSROADS) -->
-        <footer class="py-16 bg-black border-t border-gray-800 text-center">
-            <div class="container mx-auto px-4 max-w-4xl">
-                <h2 class="font-chalk-heading text-2xl md:text-3xl mb-8 text-white">UMEFIKA NJIA PANDA: CHAGUA HATIMA YAKO</h2>
-                
-                <div class="grid md:grid-cols-2 gap-8 mb-12 text-left">
-                    <div class="bg-red-900/10 p-6 border border-red-900/30 opacity-70">
-                        <h4 class="font-chalk-hand text-xl text-red-500 mb-2">NJIA A: KUPUUZA (KUSHOTO)</h4>
-                        <p class="text-sm text-gray-400 font-science">
-                            Funga ukurasa huu. Kesho utaamka saa 11 alfajiri kukimbiza daladala. Utaenda dukani kukutana na wateja wale wale. Utaendelea kulipa riba za "Kausha Damu." Hakuna kitakachobadilika.
-                        </p>
-                    </div>
-                    <div class="bg-green-900/10 p-6 border border-green-900/30">
-                        <h4 class="font-chalk-hand text-xl text-green-500 mb-2">NJIA B: KUCHUKUA HATUA (KULIA)</h4>
-                        <p class="text-sm text-gray-400 font-science">
-                            Toa hiyo elfu tano. Pata maarifa haya. Kesho unaamka na akili mpya. Unaanza kupanga bei zako. Unaanza kulipa madeni. Unaanza kujenga heshima. Unakuwa Ngariba.
-                        </p>
-                    </div>
+        <!-- Footer CTA -->
+        <footer class="section footer-cta">
+            <div class="container">
+                <h2>🚧 UMEFIKA NJIA PANDA: CHAGUA HATIMA YAKO</h2>
+                <p>Maisha ni maamuzi. Na hivi sasa, umesimama njia panda. Una machaguo mawili tu:</p>
+                <div class="cta-option dim">
+                    <h4>NJIA A: KUPUUZA NA KUONDOKA</h4>
+                    <p>Unaweza kufunga ukurasa huu na kuendelea na maisha yako ya kawaida. Kesho utaamka saa 11 alfajiri
+                        kukimbiza daladala. Utaenda dukani kukutana na wateja wale wale wanaokupangia bei. Utaendelea
+                        kulipa riba za "Kausha Damu." Utaendelea kuona wenzako wakipiga hatua huku ukijiuliza
+                        "Nimerogwa?" Hakuna kitakachobadilika. Maumivu yataendelea.</p>
                 </div>
-
-                <p class="font-chalk-hand text-gray-300 mb-6">Mpira uko kwako. Dunia haisubiri wanyonge wanaosita.</p>
-
-                <button onclick="openModal()" class="btn-action px-12 py-4 text-xl md:text-2xl shadow-[0_0_15px_rgba(255,0,0,0.6)]">
-                    BONYEZA KITUFE HIKI KUMALIZA MCHEZO
-                </button>
-                
-                <p class="mt-12 text-gray-700 text-xs font-science">
-                    &copy; 2024 Jando la Ujanja. Haki zote zimehifadhiwa.<br>
-                    This site is not part of the Facebook website or Facebook Inc.
-                </p>
+                <div class="cta-option bright">
+                    <h4>NJIA B: KUCHUKUA HATUA SASA</h4>
+                    <p>Unatoa hiyo elfu tano (ambayo ungeinywea soda au bando). Unapata maarifa haya. Kesho unaamka na
+                        akili mpya. Unaanza kupanga bei zako. Unaanza kulipa madeni. Unaanza kujenga heshima. Ndani ya
+                        mwezi mmoja, unakuwa mtu mwingine. Unakuwa Ngariba.</p>
+                </div>
+                <p><strong>Umaskini ni maamuzi. Utajiri na Heshima ni maamuzi.</strong> Mpira uko kwako.</p>
+                <p>Dunia haisubiri wanyonge wanaosita. Chukua nafasi yako sasa au ukae pembeni uwatazame wenzako
+                    wakipita.</p>
+                <button class="btn-cta" onclick="openModal()">NIPATIE NAKALA YANGU SASA</button>
+                <p style="font-size: 12px; color: var(--chalk-dim); margin-top: 12px; font-style: italic;">(Download
+                    inaanza mara moja baada ya malipo)</p>
+                <p class="footer-copy">© 2024 Jando la Ujanja. Haki zote zimehifadhiwa.</p>
             </div>
         </footer>
-
     </div>
-    <!-- END SALES PAGE -->
 
-
-    <!-- THANK YOU PAGE -->
-    <div id="thank-you-page" class="min-h-screen flex items-center justify-center text-center px-4 bg-black">
-        <div class="max-w-2xl">
-            <div class="text-green-500 text-6xl mb-6 animate-bounce">
-                <i class="fas fa-check-circle"></i>
+    <!-- Thank You -->
+    <div id="thank-you-page">
+        <div class="thank-you-content">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h1>Malipo Yamekamilika!</h1>
+            <p>Umechukua uamuzi mzuri. Kitabu chako kinakuja.</p>
+            <div class="thank-you-box">
+                <p><strong>Kitabu chako kinatumwa sasa.</strong></p>
+                <p style="margin-top: 8px;">Angalia SMS au WhatsApp kwenye namba uliyolipia.</p>
             </div>
-            <h1 class="font-chalk-heading text-4xl md:text-6xl text-white mb-4">MALIPO YAMEKAMILIKA!</h1>
-            <h2 class="font-chalk-hand text-2xl text-yellow-400 mb-8">Umechukua uamuzi wa kiume.</h2>
-            
-            <div class="bg-white/10 p-6 rounded border border-gray-600 text-left mb-8">
-                <p class="font-science text-gray-300 mb-4">Kitabu chako kinatumwa sasa.</p>
-                <p class="font-science text-gray-300">Tafadhali angalia SMS au WhatsApp kwenye namba uliyolipia.</p>
-            </div>
-
-            <a href="#" onclick="location.reload()" class="text-red-500 hover:text-red-400 underline font-science">Rudi Mwanzo</a>
+            <a href="#" onclick="location.reload()" class="link-back">← Rudi Mwanzo</a>
         </div>
     </div>
 
-
-    <!-- PAYMENT MODAL -->
+    <!-- Payment Modal -->
     <div id="paymentModal" class="modal">
-        <div class="modal-content text-center">
-            <span onclick="closeModal()" class="absolute top-2 right-4 text-gray-400 text-2xl cursor-pointer hover:text-white">&times;</span>
-            
-            <h3 class="font-chalk-heading text-2xl mb-4 text-yellow-400">MALIPO SALAMA</h3>
-            
-            <div class="mb-6 flex flex-col items-center">
-                <p class="text-xs text-gray-400 mb-2 font-science uppercase">Inawezeshwa na:</p>
-                <img src="https://i.ibb.co/jvqbh208/zenopay-logo.png" alt="ZenoPay Logo" class="h-10 md:h-12 object-contain bg-white/10 p-2 rounded">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-header">
+                <h3>Lipa Tsh 5,000</h3>
+                <p>Ingiza namba yako ya simu</p>
             </div>
-
-            <p class="text-sm text-gray-300 mb-6 font-science">
-                Ingiza namba yako ya simu (M-Pesa, Tigo, Airtel) kukamilisha malipo ya <strong>Tsh 5,000/=</strong>
-            </p>
-
-            <!-- Payment Form -->
-            <form id="paymentForm" onsubmit="handlePayment(event)" class="space-y-4">
-                <div class="relative">
-                    <i class="fas fa-phone absolute left-3 top-3.5 text-gray-500"></i>
-                    <input type="tel" id="phoneNumber" placeholder="Mfano: 0754000000" required 
-                        class="w-full bg-black border-2 border-gray-600 p-3 pl-10 text-white font-science focus:border-yellow-400 focus:outline-none rounded-none text-lg">
+            <form id="paymentForm" onsubmit="handlePayment(event)">
+                <input type="tel" id="phoneNumber" class="form-input" placeholder="0754000000" required>
+                <div id="loadingIndicator" class="loader">
+                    <div class="spinner"></div>
+                    <p style="color: var(--chalk-white); margin:0;">Angalia simu yako...</p>
                 </div>
-                
-                <div id="loadingIndicator" class="hidden">
-                    <div class="loader"></div>
-                    <p class="text-xs text-yellow-400 mt-2 animate-pulse font-science">Inaanzisha malipo kwenye simu yako...</p>
-                    <p class="text-[10px] text-gray-500 mt-1">Tafadhali usiRefresh ukurasa</p>
-                </div>
-
-                <button type="submit" id="payBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 font-science uppercase tracking-wider transition">
-                    LIPA SASA
-                </button>
+                <button type="submit" id="payBtn" class="btn-submit">LIPA SASA</button>
             </form>
-            
-            <div class="mt-4 flex justify-center gap-2 opacity-50 grayscale">
-                <i class="fas fa-mobile-alt text-lg"></i>
-                <span class="text-xs">Vodacom | Tigo | Airtel | Halotel</span>
+            <div class="payment-secure">
+                <img src="secure.png" alt="M-Pesa, Tigo Pesa, Airtel Money, Halopesa">
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // CONFIGURATION
         const ZENOPAY_API_KEY = "sv5YWe1oG-UtuxHtlTaC5ilIai9CWQufO3uwtoZtqpwwmZUWncric2JICY9diemFiue1XRNaiPnDgQtjxTqEFg";
         const AMOUNT = "5000";
-        
-        // Modal Logic
+        const API_URL = "/api/pay";
+        let currentOrderId = null;
+        let pollInterval = null;
+
         const modal = document.getElementById("paymentModal");
+        function openModal() { modal.classList.add('active'); }
+        function closeModal() { modal.classList.remove('active'); resetForm(); }
+        window.onclick = (e) => { if (e.target === modal) closeModal(); }
 
-        function openModal() { modal.style.display = "block"; }
-        function closeModal() { modal.style.display = "none"; }
-        window.onclick = function(event) { if (event.target == modal) closeModal(); }
+        function resetForm() {
+            document.getElementById('payBtn').style.display = 'block';
+            document.getElementById('loadingIndicator').classList.remove('active');
+            document.getElementById('phoneNumber').value = '';
+            if (pollInterval) clearInterval(pollInterval);
+        }
 
-        // Payment Processing
-        function handlePayment(e) {
+        async function handlePayment(e) {
             e.preventDefault();
-            
-            const phone = document.getElementById('phoneNumber').value;
+            let phone = document.getElementById('phoneNumber').value.trim().replace(/\s+/g, '');
             const btn = document.getElementById('payBtn');
             const loader = document.getElementById('loadingIndicator');
 
-            // Simple Validation
-            if(phone.length < 10) {
+            // Format phone: remove leading 0 and add 255
+            if (phone.startsWith('0')) {
+                phone = '255' + phone.substring(1);
+            } else if (!phone.startsWith('255')) {
+                phone = '255' + phone;
+            }
+
+            if (phone.length < 12) {
                 alert("Tafadhali ingiza namba sahihi ya simu.");
                 return;
             }
 
-            // UI Loading State
             btn.style.display = 'none';
-            loader.style.display = 'block';
+            loader.classList.add('active');
 
-            console.log("Starting ZenoPay Process for:", phone);
+            try {
+                const params = new URLSearchParams();
+                params.append('create_order', '1');
+                params.append('buyer_email', 'mteja@jandolaujanja.co.tz');
+                params.append('buyer_name', 'Mteja');
+                params.append('buyer_phone', phone);
+                params.append('amount', AMOUNT);
+                params.append('account_id', 'zp109725');
+                params.append('api_key', ZENOPAY_API_KEY);
 
-            // SIMULATION (PREVIEW MODE)
-            setTimeout(() => {
-                completePayment();
-            }, 3000); 
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: params
+                });
+
+                const data = await response.json();
+                console.log('ZenoPay Response:', data);
+
+                if (data.status === 'success' || data.order_id) {
+                    currentOrderId = data.order_id;
+                    pollPaymentStatus(data.order_id);
+                } else {
+                    throw new Error(data.message || 'Tatizo la kuanzisha malipo');
+                }
+            } catch (error) {
+                console.error('Payment Error:', error);
+                alert('Tatizo la mawasiliano. Tafadhali jaribu tena.');
+                resetForm();
+            }
+        }
+
+        function pollPaymentStatus(orderId) {
+            let attempts = 0;
+            pollInterval = setInterval(async () => {
+                attempts++;
+                if (attempts > 40) {
+                    clearInterval(pollInterval);
+                    alert('Muda umeisha. Tafadhali jaribu tena.');
+                    resetForm();
+                    return;
+                }
+                try {
+                    const params = new URLSearchParams();
+                    params.append('check_status', '1');
+                    params.append('order_id', orderId);
+                    params.append('api_key', ZENOPAY_API_KEY);
+
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: params
+                    });
+                    const data = await response.json();
+                    console.log('Status:', data);
+
+                    if (data.payment_status === 'COMPLETED' || data.status === 'completed') {
+                        clearInterval(pollInterval);
+                        completePayment();
+                    } else if (data.payment_status === 'FAILED') {
+                        clearInterval(pollInterval);
+                        alert('Malipo yameshindikana. Jaribu tena.');
+                        resetForm();
+                    }
+                } catch (error) {
+                    console.error('Poll Error:', error);
+                }
+            }, 3000);
         }
 
         function completePayment() {
             closeModal();
-            document.getElementById('sales-page').style.display = 'none';
-            document.getElementById('thank-you-page').style.display = 'flex';
-            window.scrollTo(0,0);
+            // Generate a secure token based on order ID and timestamp
+            const token = btoa(currentOrderId + '_' + Date.now() + '_' + Math.random().toString(36).substring(2));
+            // Store in session and redirect
+            sessionStorage.setItem('paymentToken', token);
+            window.location.href = 'success.html?token=' + encodeURIComponent(token);
         }
     </script>
 </body>
+
 </html>

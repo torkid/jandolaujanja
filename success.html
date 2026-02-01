@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="sw">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hongera! | Jando la Ujanja</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-blackboard: #1a1a1a;
+            --bg-blackboard-light: #222222;
+            --chalk-white: #e8e4dc;
+            --chalk-dim: #9a9590;
+            --chalk-yellow: #f4d35e;
+            --chalk-red: #e63946;
+            --chalk-green: #4ade80;
+            --charcoal: #3d3d3d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-blackboard);
+            color: var(--chalk-white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 420px;
+            width: 100%;
+        }
+
+        .success-icon {
+            font-size: 72px;
+            color: var(--chalk-green);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: var(--chalk-dim);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .product-box {
+            background: var(--bg-blackboard-light);
+            border: 2px solid var(--charcoal);
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .product-box img {
+            max-width: 180px;
+            width: 100%;
+            border: 3px solid var(--charcoal);
+            margin-bottom: 16px;
+        }
+
+        .product-box h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .btn-download {
+            display: block;
+            width: 100%;
+            background: var(--chalk-green);
+            color: var(--bg-blackboard);
+            font-size: 16px;
+            font-weight: 700;
+            padding: 16px 24px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .btn-download:hover {
+            background: #3bc96e;
+        }
+
+        .bonus-section {
+            margin-top: 32px;
+            text-align: left;
+        }
+
+        .bonus-section h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: var(--chalk-yellow);
+            text-align: center;
+        }
+
+        .bonus-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--charcoal);
+        }
+
+        .bonus-item:last-child {
+            border-bottom: none;
+        }
+
+        .bonus-icon {
+            color: var(--chalk-green);
+            font-size: 18px;
+        }
+
+        .bonus-item span {
+            font-size: 15px;
+            color: var(--chalk-dim);
+        }
+
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--chalk-green);
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 24px;
+            font-size: 15px;
+        }
+
+        .footer-note {
+            margin-top: 32px;
+            font-size: 12px;
+            color: var(--chalk-dim);
+            opacity: 0.6;
+        }
+
+        .error-page {
+            display: none;
+        }
+
+        .error-page.active {
+            display: block;
+        }
+
+        .success-page {
+            display: none;
+        }
+
+        .success-page.active {
+            display: block;
+        }
+
+        .error-icon {
+            font-size: 64px;
+            color: var(--chalk-red);
+            margin-bottom: 16px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: var(--chalk-yellow);
+            color: var(--bg-blackboard);
+            font-size: 15px;
+            font-weight: 700;
+            padding: 14px 28px;
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Error Page (No Access) -->
+        <div id="error-page" class="error-page">
+            <div class="error-icon"><i class="fas fa-lock"></i></div>
+            <h1>Samahani, Huna Ruhusa</h1>
+            <p>Ukurasa huu ni kwa wateja waliolipa tu. Tafadhali nunua kitabu kwanza ili upate ruhusa ya kudownload.</p>
+            <a href="index.html" class="btn-back">← Rudi kwenye Ukurasa wa Mauzo</a>
+        </div>
+
+        <!-- Success Page (After Payment) -->
+        <div id="success-page" class="success-page">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h1>Hongera! Malipo Yamekamilika! 🎉</h1>
+            <p>Umechukua uamuzi mzuri. Sasa una silaha za kubadilisha biashara yako milele.</p>
+
+            <div class="product-box">
+                <img src="https://i.ibb.co/0RbSYSrT/Pambana-Pasua-Pata-Ebook-Cover.png" alt="Pambana Pasua Pata">
+                <h3>PAMBANA, PASUA, PATA</h3>
+                <p style="margin-bottom: 16px;">Manual ya Vita kwa Mfanyabiashara</p>
+                <a href="ebook.pdf" download class="btn-download">
+                    <i class="fas fa-download"></i> Download Kitabu Chako
+                </a>
+            </div>
+
+            <div class="bonus-section">
+                <h3>🎁 ZAWADI ZAKO</h3>
+                <div class="bonus-item">
+                    <span class="bonus-icon">✅</span>
+                    <span><strong>Bonasi #1:</strong> Checklist ya Ukaguzi wa Thermostat (PDF ndani ya kitabu)</span>
+                </div>
+                <div class="bonus-item">
+                    <span class="bonus-icon">✅</span>
+                    <span><strong>Bonasi #2:</strong> Script ya Kuchokonoa Bei (PDF ndani ya kitabu)</span>
+                </div>
+                <div class="bonus-item">
+                    <span class="bonus-icon">✅</span>
+                    <span><strong>Bonasi #3:</strong> Ramani ya Kujenga Brand (PDF ndani ya kitabu)</span>
+                </div>
+            </div>
+
+            <a href="https://wa.me/255754000000" class="whatsapp-link" target="_blank">
+                <i class="fab fa-whatsapp"></i> Una swali? Wasiliana nasi WhatsApp
+            </a>
+
+            <p class="footer-note">© 2024 Jando la Ujanja. Haki zote zimehifadhiwa.</p>
+        </div>
+    </div>
+
+    <script>
+        // Check for valid payment token
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const storedToken = sessionStorage.getItem('paymentToken');
+
+        // Valid if token matches or user has a stored token
+        if (token && token.length > 20) {
+            // Store token for this session
+            sessionStorage.setItem('paymentToken', token);
+            document.getElementById('success-page').classList.add('active');
+        } else if (storedToken && storedToken.length > 20) {
+            // User already verified in this session
+            document.getElementById('success-page').classList.add('active');
+        } else {
+            // No valid token - show error
+            document.getElementById('error-page').classList.add('active');
+        }
+    </script>
+</body>
+
+</html>
