@@ -9,12 +9,52 @@ export default async function handler(request) {
             status: 200,
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
         });
     }
 
+    const url = new URL(request.url);
+
+    // Handle status check (GET request)
+    if (request.method === 'GET' && url.searchParams.get('order_id')) {
+        const orderId = url.searchParams.get('order_id');
+        const apiKey = url.searchParams.get('api_key');
+
+        try {
+            const response = await fetch(`https://zenoapi.com/api/payments/order-status?order_id=${orderId}`, {
+                method: 'GET',
+                headers: {
+                    'x-api-key': apiKey,
+                },
+            });
+
+            const data = await response.json();
+
+            return new Response(JSON.stringify(data), {
+                status: 200,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            });
+        } catch (error) {
+            console.error('Status Check Error:', error);
+            return new Response(JSON.stringify({
+                error: 'Status check failed',
+                details: error.message
+            }), {
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            });
+        }
+    }
+
+    // Handle payment creation (POST request)
     if (request.method !== 'POST') {
         return new Response(JSON.stringify({ error: 'Method not allowed' }), {
             status: 405,
@@ -23,16 +63,23 @@ export default async function handler(request) {
     }
 
     try {
-        // Get the request body as text first
-        const bodyText = await request.text();
+        const body = await request.json();
 
-        // Forward the request to ZenoPay
-        const response = await fetch('https://api.zeno.africa', {
+        // Forward the request to ZenoPay with correct format
+        const response = await fetch('https://zenoapi.com/api/payments/mobile_money_tanzania', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
+                'x-api-key': body.api_key,
             },
-            body: bodyText,
+            body: JSON.stringify({
+                order_id: body.order_id,
+                buyer_name: body.buyer_name,
+                buyer_phone: body.buyer_phone,
+                buyer_email: body.buyer_email,
+                amount: body.amount,
+                webhook_url: body.webhook_url || '',
+            }),
         });
 
         const data = await response.json();

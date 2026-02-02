@@ -1084,10 +1084,19 @@
 
     <script>
         const ZENOPAY_API_KEY = "sv5YWe1oG-UtuxHtlTaC5ilIai9CWQufO3uwtoZtqpwwmZUWncric2JICY9diemFiue1XRNaiPnDgQtjxTqEFg";
-        const AMOUNT = "500";
+        const AMOUNT = 5000;
         const API_URL = "/api/pay";
         let currentOrderId = null;
         let pollInterval = null;
+
+        // Generate UUID-style order ID
+        function generateOrderId() {
+            return 'xxxx-xxxx-4xxx-yxxx'.replace(/[xy]/g, function  (c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            }) + '-' + Date.now().toString(36);
+        }
 
         const modal = document.getElementById("paymentModal");
         function openModal() { modal.classList.add('active'); }
@@ -1122,28 +1131,29 @@
             btn.style.display = 'none';
             loader.classList.add('active');
 
-            try {
-                const params = new URLSearchParams();
-                params.append('create_order', '1');
-                params.append('buyer_email', 'mteja@jandolaujanja.co.tz');
-                params.append('buyer_name', 'Mteja');
-                params.append('buyer_phone', phone);
-                params.append('amount', AMOUNT);
-                params.append('account_id', 'zp109725');
-                params.append('api_key', ZENOPAY_API_KEY);
+            // Generate unique order ID
+            currentOrderId = generateOrderId();
 
+            try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: params
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        order_id: currentOrderId,
+                        buyer_email: 'mteja@jandolaujanja.co.tz',
+                        buyer_name: 'Mteja',
+                        buyer_phone: phone,
+                        amount: AMOUNT,
+                        api_key: ZENOPAY_API_KEY
+                    })
                 });
 
                 const data = await response.json();
                 console.log('ZenoPay Response:', data);
 
-                if (data.status === 'success' || data.order_id) {
-                    currentOrderId = data.order_id;
-                    pollPaymentStatus(data.order_id);
+                // ZenoPay returns various success indicators
+                if (data.order_id || data.status === 'success' || data.message?.includes('success')) {
+                    pollPaymentStatus(currentOrderId);
                 } else {
                     throw new Error(data.message || 'Tatizo la kuanzisha malipo');
                 }
@@ -1165,23 +1175,20 @@
                     return;
                 }
                 try {
-                    const params = new URLSearchParams();
-                    params.append('check_status', '1');
-                    params.append('order_id', orderId);
-                    params.append('api_key', ZENOPAY_API_KEY);
-
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: params
-                    });
+                    // Use GET request for status check
+                    const statusUrl = `${API_URL}?order_id=${encodeURIComponent(orderId)}&api_key=${encodeURIComponent(ZENOPAY_API_KEY)}`;
+                    const response = await fetch(statusUrl, { method: 'GET' });
                     const data = await response.json();
                     console.log('Status:', data);
 
-                    if (data.payment_status === 'COMPLETED' || data.status === 'completed') {
+                    // Check for completed payment in response
+                    const paymentStatus = data.payment_status |
+                        .data[0] && data.data[0].payment_status);
+
+                  === 'COMPLETED') {
                         clearInterval(pollInterval);
                         completePayment();
-                    } else if (data.payment_status === 'FAILED') {
+                    } else if (paymentStatus === 'FAILED') {
                         clearInterval(pollInterval);
                         alert('Malipo yameshindikana. Jaribu tena.');
                         resetForm();
